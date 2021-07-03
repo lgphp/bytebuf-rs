@@ -72,14 +72,22 @@ impl ByteBuf {
 
     pub fn write_bytebuf(&mut self, bb: ByteBuf) -> io::Result<usize> {
         let result = self.buf.write(bb.as_slice());
-        self.write_index += bb.as_slice().len();
+        if self.write_index == 0 {
+            self.write_index += bb.as_slice().len()-1;
+        }else{
+            self.write_index += bb.as_slice().len();
+        }
         result
     }
 
 
     pub fn write_bytes(&mut self, bytes: &[u8]) -> io::Result<usize> {
         let result = self.buf.write(bytes);
-        self.write_index += bytes.len();
+        if self.write_index == 0 {
+            self.write_index += bytes.len()-1;
+        }else{
+            self.write_index += bytes.len();
+        }
         result
     }
 
@@ -93,13 +101,21 @@ impl ByteBuf {
 
     pub fn write_str(&mut self, v: &str) -> io::Result<usize> {
         let result = self.buf.write(v.as_bytes());
-        self.write_index += v.as_bytes().len();
+        if self.write_index==0{
+            self.write_index += v.as_bytes().len()-1;
+        }else{
+            self.write_index += v.as_bytes().len();
+        }
         result
     }
 
     pub fn write_string(&mut self, v: String) -> io::Result<usize> {
         let result = self.buf.write(v.as_bytes());
-        self.write_index += v.as_bytes().len();
+        if self.write_index==0{
+            self.write_index += v.as_bytes().len()-1;
+        }else{
+            self.write_index += v.as_bytes().len();
+        }
         result
     }
 
@@ -116,7 +132,9 @@ impl ByteBuf {
         } else {
             self.buf.write(&[0x00])
         };
-        self.write_index += 1;
+        if self.write_index>0{
+            self.write_index += 1;
+        }
         r
     }
 
@@ -133,7 +151,9 @@ impl ByteBuf {
 
     pub fn write_u8(&mut self, v: u8) -> io::Result<usize> {
         let r = self.buf.write(&v.to_be_bytes());
-        self.write_index += 1;
+        if self.write_index>0{
+            self.write_index += 1;
+        }
         r
     }
 
@@ -146,7 +166,9 @@ impl ByteBuf {
 
     pub fn write_i8(&mut self, v: i8) -> io::Result<usize> {
         let r = self.buf.write(&v.to_be_bytes());
-        self.write_index += 1;
+        if self.write_index>0{
+            self.write_index += 1;
+        }
         r
     }
 
@@ -176,7 +198,12 @@ impl ByteBuf {
 
     pub fn write_i16(&mut self, v: i16) -> io::Result<usize> {
         let r = self.buf.write(&v.to_be_bytes());
-        self.write_index += mem::size_of::<i16>();
+        if self.write_index==0{
+            self.write_index += mem::size_of::<i16>()-1;
+        }else{
+            self.write_index += mem::size_of::<i16>();
+        }
+
         r
     }
 
@@ -193,7 +220,11 @@ impl ByteBuf {
 
     pub fn write_u32(&mut self, v: u32) -> io::Result<usize> {
         let r = self.buf.write(&v.to_be_bytes());
-        self.write_index += mem::size_of::<u32>();
+        if self.write_index==0{
+            self.write_index += mem::size_of::<u32>()-1;
+        }else{
+            self.write_index += mem::size_of::<u32>();
+        }
         r
     }
 
@@ -209,7 +240,12 @@ impl ByteBuf {
 
     pub fn write_i32(&mut self, v: i32) -> io::Result<usize> {
         let r = self.buf.write(&v.to_be_bytes());
-        self.write_index += mem::size_of::<i32>();
+        if self.write_index==0{
+            self.write_index += mem::size_of::<i32>()-1;
+        }else{
+            self.write_index += mem::size_of::<i32>();
+        }
+
         r
     }
 
@@ -226,7 +262,11 @@ impl ByteBuf {
 
     pub fn write_u64(&mut self, v: u64) -> io::Result<usize> {
         let r = self.buf.write(&v.to_be_bytes());
-        self.write_index += mem::size_of::<u64>();
+        if self.write_index==0{
+            self.write_index += mem::size_of::<u64>()-1;
+        }else{
+            self.write_index += mem::size_of::<u64>();
+        }
         r
     }
 
@@ -243,7 +283,11 @@ impl ByteBuf {
 
     pub fn write_i64(&mut self, v: i64) -> io::Result<usize> {
         let r = self.buf.write(&v.to_be_bytes());
-        self.write_index += mem::size_of::<i64>();
+        if self.write_index==0{
+            self.write_index += mem::size_of::<i64>()-1;
+        }else{
+            self.write_index += mem::size_of::<i64>();
+        }
         r
     }
 
@@ -260,7 +304,11 @@ impl ByteBuf {
 
     pub fn write_u128(&mut self, v: u128) -> io::Result<usize> {
         let r = self.buf.write(&v.to_be_bytes());
-        self.write_index += mem::size_of::<u128>();
+        if self.write_index==0{
+            self.write_index += mem::size_of::<u128>()-1;
+        }else{
+            self.write_index += mem::size_of::<u128>();
+        }
         r
     }
 
@@ -277,7 +325,11 @@ impl ByteBuf {
 
     pub fn write_i128(&mut self, v: i128) -> io::Result<usize> {
         let r = self.buf.write(&v.to_be_bytes());
-        self.write_index += mem::size_of::<i128>();
+        if self.write_index==0{
+            self.write_index += mem::size_of::<i128>()-1;
+        }else{
+            self.write_index += mem::size_of::<i128>();
+        }
         r
     }
 
@@ -295,7 +347,11 @@ impl ByteBuf {
 
     pub fn write_f32(&mut self, v: f32) -> io::Result<usize> {
         let r = self.buf.write(&v.to_be_bytes());
-        self.write_index += mem::size_of::<f32>();
+        if self.write_index==0{
+            self.write_index += mem::size_of::<f32>()-1;
+        }else{
+            self.write_index += mem::size_of::<f32>();
+        }
         r
     }
     pub fn read_f32(&mut self) -> f32 {
@@ -311,7 +367,11 @@ impl ByteBuf {
 
     pub fn write_f64(&mut self, v: f64) -> io::Result<usize> {
         let r = self.buf.write(&v.to_be_bytes());
-        self.write_index += mem::size_of::<f64>();
+        if self.write_index==0{
+            self.write_index += mem::size_of::<f64>()-1;
+        }else{
+            self.write_index += mem::size_of::<f64>();
+        }
         r
     }
     pub fn read_f64(&mut self) -> f64 {
@@ -372,12 +432,7 @@ impl ByteBuf {
     ///
 
     pub fn get_writer_index(&self) -> usize {
-        let r = if self.write_index>0 {
-            self.write_index - 1
-        }else{
-            self.write_index
-        };
-        r
+         self.write_index
     }
 
 
