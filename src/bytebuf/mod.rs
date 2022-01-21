@@ -40,6 +40,7 @@ impl DerefMut for ByteBuf {
     }
 }
 
+
 impl Debug for ByteBuf {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         write!(f, "{:?}", self.buf.as_slice())
@@ -59,6 +60,7 @@ impl ByteBuf {
             write_mark: -1,
             read_index: 0,
             write_index: 0,
+
         }
     }
 
@@ -514,7 +516,7 @@ impl ByteBuf {
     }
 
 
-    fn read_string(&mut self, len: usize) -> String {
+    pub fn read_string(&mut self, len: usize) -> String {
         if len == 0 {
             return String::from("");
         }
