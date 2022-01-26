@@ -71,7 +71,7 @@ impl ByteBuf {
             read_mark: -1,
             write_mark: -1,
             read_index: 0,
-            write_index: src.len() - 1,
+            write_index: src.len(),
         }
     }
 

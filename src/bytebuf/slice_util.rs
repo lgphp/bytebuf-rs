@@ -46,9 +46,12 @@ mod test {
     #[test]
     pub fn test_slice_copy() {
         let mut s = "hello".to_string();
+        let x1 = s.clone().into_boxed_str();
+        let mut x2 = x1.into_boxed_bytes();
+        let mut x = x2.as_mut();
         let mut byte_a = unsafe { s.as_bytes_mut() };
         let mut byte_b = &mut vec![0u8; byte_a.len()][..];
-        byte_a.copy_to(&mut byte_b, 1);
+        x.copy_to(&mut byte_b, 1);
         println!("{}", String::from_utf8_lossy(byte_b));
     }
 }
